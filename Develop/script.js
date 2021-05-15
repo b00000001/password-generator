@@ -1,10 +1,6 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
-passwordComponents = {
-	alphabets: "abcdefghijklmnopqrstuvwxyz".split(),
-};
-
 // Write password to the #password input
 function writePassword() {
 	var password = generatePassword();
@@ -20,22 +16,91 @@ function writePassword() {
 // WHEN I click the button to generate a password
 // THEN I am presented with a series of prompts for password criteria
 function generatePassword() {
-	var newpassword;
-	var pwdLength = prompt(
-		"Please enter the length of the password you wish you use [Between 2 and 8]."
-	);
-	var specialChar = confirm("Do you wish you use special characters?");
-
-	if (specialChar) {
-		var specialChar_settings = {
-			specialChar_upper: confirm("Upper case characters allowed?"),
-			specialChar_lower: confirm("Lower case characters allowed?"),
-			specialChar_numeric: confirm("Numeric case characters allowed?"),
-		};
+	var passwordData = {
+		prompts: {
+			pwdLength: prompt(
+				"Please enter the length of the password you wish you use [Between 2 and 8]."
+			),
+			specialChar: confirm("Do you wish you use special characters?"),
+			numberChar: confirm("Do you wish you use numerical values?"),
+			upperChar: confirm("Do you want to use Upper case letters?"),
+		},
+		newpassword: [],
+		parameters: {
+			alphabets: [
+				"a",
+				"b",
+				"c",
+				"d",
+				"e",
+				"f",
+				"g",
+				"h",
+				"i",
+				"j",
+				"k",
+				"l",
+				"m",
+				"n",
+				"o",
+				"p",
+				"q",
+				"r",
+				"s",
+				"t",
+				"u",
+				"v",
+				"w",
+				"x",
+				"y",
+				"z",
+			],
+			specialChars: ["~", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-"],
+			numberChars: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+			upperChar: [
+				"A",
+				"B",
+				"C",
+				"D",
+				"E",
+				"F",
+				"G",
+				"H",
+				"I",
+				"J",
+				"K",
+				"L",
+				"M",
+				"N",
+				"O",
+				"P",
+				"Q",
+				"R",
+				"S",
+				"T",
+				"U",
+				"V",
+				"W",
+				"X",
+				"Y",
+				"Z",
+			],
+		},
+	};
+	var promptPassword = passwordData.prompts;
+	var newPword = passwordData.newpassword;
+	var passParameters = passwordData.parameters;
+	if (promptPassword.specialChar) {
+		newPword.push(...passParameters.alphabets, ...passParameters.specialChars);
+		console.log(typeof newPword, newPword);
 	}
-	for (var i = 0; i < pwdLength; i++) {
-		if (specialChar) {
-		}
+	if (promptPassword.numberChar) {
+		newPword.push(...passParameters.numberChars);
+		console.log(typeof newPword, newPword);
+	}
+	if (promptPassword.upperChar) {
+		newPword.push(...passParameters.upperChar);
+		console.log(typeof newPword, newPword);
 	}
 }
 
