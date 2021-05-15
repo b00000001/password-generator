@@ -19,12 +19,13 @@ function generatePassword() {
 	var passwordData = {
 		prompts: {
 			pwdLength: prompt(
-				"Please enter the length of the password you wish you use [Between 2 and 8]."
+				"Please enter the length of the password you wish you use [Between 8 and 128]."
 			),
 			specialChar: confirm("Do you wish you use special characters?"),
 			numberChar: confirm("Do you wish you use numerical values?"),
 			upperChar: confirm("Do you want to use Upper case letters?"),
 		},
+		passcontents: [],
 		newpassword: [],
 		parameters: {
 			alphabets: [
@@ -88,11 +89,14 @@ function generatePassword() {
 		},
 	};
 	var promptPassword = passwordData.prompts;
-	var newPword = passwordData.newpassword;
+	var newPword = passwordData.passcontents;
 	var passParameters = passwordData.parameters;
 	if (promptPassword.specialChar) {
+		console.log("Length of password", promptPassword.pwdLength);
 		newPword.push(...passParameters.alphabets, ...passParameters.specialChars);
 		console.log(typeof newPword, newPword);
+	} else {
+		newPword.push(...passParameters.alphabets);
 	}
 	if (promptPassword.numberChar) {
 		newPword.push(...passParameters.numberChars);
@@ -102,6 +106,12 @@ function generatePassword() {
 		newPword.push(...passParameters.upperChar);
 		console.log(typeof newPword, newPword);
 	}
+	for (var i = 0; i < promptPassword.pwdLength; i++) {
+		passwordData.newpassword.push(
+			newPword[Math.floor(Math.random() * newPword.length)]
+		);
+	}
+	return passwordData.newpassword.join("");
 }
 
 // WHEN prompted for password criteria
