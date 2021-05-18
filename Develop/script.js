@@ -12,6 +12,7 @@ function writePassword() {
 function generatePassword() {
 	var passwordData = {
 		prompts: {
+			// holds all the prompts for app.
 			pwdLength: prompt(
 				"Please enter the length of the password you wish you use [Between 8 and 128]."
 			),
@@ -19,9 +20,10 @@ function generatePassword() {
 			numberChar: confirm("Do you wish you use numerical values?"),
 			upperChar: confirm("Do you want to use Upper case letters?"),
 		},
-		passcontents: [],
-		newpassword: [],
+		passcontents: [], // Will hold the possible characters for password
+		newpassword: [], // Array for holding the randomly selected password characters.
 		parameters: {
+			// Holds all the possible characters for randomly generated pass.
 			alphabets: [
 				"a",
 				"b",
