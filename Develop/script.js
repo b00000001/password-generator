@@ -16,9 +16,6 @@ function generatePassword() {
 			pwdLength: prompt(
 				"Please enter the length of the password you wish you use [Between 8 and 128]."
 			),
-			specialChar: confirm("Do you wish you use special characters?"),
-			numberChar: confirm("Do you wish you use numerical values?"),
-			upperChar: confirm("Do you want to use Upper case letters?"),
 		},
 		passcontents: [], // Will hold the possible characters for password
 		newpassword: [], // Array for holding the randomly selected password characters.
@@ -84,36 +81,44 @@ function generatePassword() {
 			],
 		},
 	};
-	var promptPassword = passwordData.prompts; // Object shortcut for brevity
-	var newPword = passwordData.passcontents; // Object shortcut for brevity
-	var passParameters = passwordData.parameters; // Object shortcut for brevity
 
-	if (promptPassword.pwdLength >= 8 && promptPassword.pwdLength <= 128) {
-		if (promptPassword.specialChar) {
-			console.log("Length of password", promptPassword.pwdLength);
-			newPword.push(
-				...passParameters.alphabets,
-				...passParameters.specialChars
+	if (
+		passwordData.prompts.pwdLength >= 8 &&
+		passwordData.prompts.pwdLength <= 128
+	) {
+		passwordData.prompts = {
+			specialChar: confirm("Do you wish you use special characters?"),
+			numberChar: confirm("Do you wish you use numerical values?"),
+			upperChar: confirm("Do you want to use Upper case letters?"),
+		};
+
+		if (passwordData.prompts.specialChar) {
+			console.log("Length of password", passwordData.prompts.pwdLength);
+			passwordData.newpassword.push(
+				...passwordData.parameters.alphabets,
+				...passwordData.parameters.specialChars
 			);
-			console.log(typeof newPword, newPword);
+			console.log(typeof passwordData.newpassword, passwordData.newpassword);
 		} else {
-			newPword.push(...passParameters.alphabets);
+			passwordData.newpassword.push(...passwordData.parameters.alphabets);
 		}
-		if (promptPassword.numberChar) {
-			newPword.push(...passParameters.numberChars);
-			console.log(typeof newPword, newPword);
+		if (passwordData.prompts.numberChar) {
+			passwordData.newpassword.push(...passwordData.parameters.numberChars);
+			console.log(typeof passwordData.newpassword, passwordData.newpassword);
 		}
-		if (promptPassword.upperChar) {
-			newPword.push(...passParameters.upperChar);
-			console.log(typeof newPword, newPword);
+		if (passwordData.prompts.upperChar) {
+			passwordData.newpassword.push(...passwordData.parameters.upperChar);
+			console.log(typeof passwordData.newpassword, passwordData.newpassword);
 		}
 	} else {
-		return "Please enter a number between 8 and 128";
+		alert("Please enter a number between 8 and 128");
 	}
 
-	for (var i = 0; i < promptPassword.pwdLength; i++) {
+	for (var i = 0; i < passwordData.prompts.pwdLength; i++) {
 		passwordData.newpassword.push(
-			newPword[Math.floor(Math.random() * newPword.length)]
+			passwordData.newpassword[
+				Math.floor(Math.random() * passwordData.newpassword.length)
+			]
 		);
 	}
 	return passwordData.newpassword.join("");
