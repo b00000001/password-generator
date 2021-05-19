@@ -10,12 +10,14 @@ function writePassword() {
 }
 
 function generatePassword() {
+	var pwdLength = parseInt(
+		prompt(
+			"Please enter the length of the password you wish you use [Between 8 and 128]."
+		)
+	);
 	var passwordData = {
 		prompts: {
 			// holds all the prompts for app.
-			pwdLength: prompt(
-				"Please enter the length of the password you wish you use [Between 8 and 128]."
-			),
 		},
 		passcontents: [], // Will hold the possible characters for password
 		newpassword: [], // Array for holding the randomly selected password characters.
@@ -83,8 +85,8 @@ function generatePassword() {
 	};
 
 	if (
-		passwordData.prompts.pwdLength >= 8 &&
-		passwordData.prompts.pwdLength <= 128
+		pwdLength >= 8 &&
+		pwdLength <= 128 // If password meets length requirements.
 	) {
 		passwordData.prompts = {
 			specialChar: confirm("Do you wish you use special characters?"),
@@ -93,33 +95,31 @@ function generatePassword() {
 		};
 
 		if (passwordData.prompts.specialChar) {
-			console.log("Length of password", passwordData.prompts.pwdLength);
-			passwordData.newpassword.push(
+			console.log("Length of password", pwdLength);
+			passwordData.passcontents.push(
 				...passwordData.parameters.alphabets,
 				...passwordData.parameters.specialChars
 			);
 			console.log(typeof passwordData.newpassword, passwordData.newpassword);
 		} else {
-			passwordData.newpassword.push(...passwordData.parameters.alphabets);
+			passwordData.passcontents.push(...passwordData.parameters.alphabets);
 		}
 		if (passwordData.prompts.numberChar) {
-			passwordData.newpassword.push(...passwordData.parameters.numberChars);
+			passwordData.passcontents.push(...passwordData.parameters.numberChars);
 			console.log(typeof passwordData.newpassword, passwordData.newpassword);
 		}
 		if (passwordData.prompts.upperChar) {
-			passwordData.newpassword.push(...passwordData.parameters.upperChar);
+			passwordData.passcontents.push(...passwordData.parameters.upperChar);
 			console.log(typeof passwordData.newpassword, passwordData.newpassword);
 		}
 	} else {
 		alert("Please enter a number between 8 and 128");
 	}
-
-	for (var i = 0; i < passwordData.prompts.pwdLength; i++) {
-		passwordData.newpassword.push(
-			passwordData.newpassword[
-				Math.floor(Math.random() * passwordData.newpassword.length)
-			]
-		);
+	console.log(passwordData.passcontents);
+	for (var i = 0; i < pwdLength; i++) {
+		var random = Math.floor(Math.random() * passwordData.passcontents.length);
+		console.log(random);
+		passwordData.newpassword.push(passwordData.passcontents[random]);
 	}
 	return passwordData.newpassword.join("");
 }
